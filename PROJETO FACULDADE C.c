@@ -1,8 +1,9 @@
 #include <stdio.h>
+#include <locale.h>
 
-
-// etapa 4
-
+// =======================
+// ETAPA 4 - STRUCT PRODUTO
+// =======================
 struct Produto {
     char nome[50];
     int quantidade;
@@ -10,9 +11,9 @@ struct Produto {
     float total;
 };
 
-
-// etapa 5
-
+// =======================
+// ETAPA 5 - FUNÇÕES
+// =======================
 void adicionarProduto(struct Produto lista[], int *qtd) {
 
     printf("\nCadastro de Produto\n");
@@ -33,7 +34,6 @@ void adicionarProduto(struct Produto lista[], int *qtd) {
     (*qtd)++;
 }
 
-
 float calcularTotal(struct Produto lista[], int qtd) {
     float soma = 0;
     int i;
@@ -45,22 +45,27 @@ float calcularTotal(struct Produto lista[], int qtd) {
     return soma;
 }
 
-// desconto - etapa 2
+// Desconto baseado na etapa 2
 float aplicarDesconto(float total) {
-    if (total >= 100) {
+    if (total >= 200) {
+        printf("\nDesconto de 15%% aplicado!\n");
+        return total * 0.85;
+    } else if (total >= 100) {
         printf("\nDesconto de 10%% aplicado!\n");
         return total * 0.90;
+    } else if (total >= 50) {
+        printf("\nDesconto de 5%% aplicado!\n");
+        return total * 0.95;
     } else {
         printf("\nNenhum desconto aplicado.\n");
         return total;
     }
 }
 
-
 void listarProdutos(struct Produto lista[], int qtd) {
     int i;
 
-    printf("\nProdutos\n");
+    printf("\n=== Lista de Produtos ===\n");
 
     for (i = 0; i < qtd; i++) {
         printf("\nProduto %d:\n", i + 1);
@@ -71,7 +76,6 @@ void listarProdutos(struct Produto lista[], int qtd) {
     }
 }
 
-// nota fiscal (produtos + total + desconto)
 void emitirNotaFiscal(struct Produto lista[], int qtd) {
     float totalBruto, totalFinal;
 
@@ -84,36 +88,24 @@ void emitirNotaFiscal(struct Produto lista[], int qtd) {
     printf("Total final: R$ %.2f\n", totalFinal);
 }
 
-// PROGRAMA
 
+
+// =======================
+// MAIN FINAL DO PROJETO
+// =======================
 int main() {
+    setlocale(LC_ALL, "Portuguese");
 
-    
-    struct Produto lista[100];
+    struct Produto lista[50];
     int qtd = 0;
-    int adicionais;
     int opcao;
-    int i;
 
-    printf("Mercadinho Fiu Fiu\n");
-
-    // etapa 1
-    printf("\nCadastre o primeiro produto\n");
-    adicionarProduto(lista, &qtd);
-
-    // etapa 3
-    printf("\nDeseja cadastrar quantos produtos adicionais? ");
-    scanf("%d", &adicionais);
-
-    for (i = 0; i < adicionais; i++) {
-        adicionarProduto(lista, &qtd);
-    }
-
-    // etapa 5
     do {
-        printf("\nMenu\n");
-        printf("1 - Adicionar novo produto\n");
-        printf("2 - Listar produtos cadastrados\n");
+        printf("\n=====================================\n");
+        printf("        SISTEMA DE PRODUTOS\n");
+        printf("=====================================\n");
+        printf("1 - Adicionar produto\n");
+        printf("2 - Listar produtos\n");
         printf("3 - Emitir nota fiscal\n");
         printf("4 - Sair\n");
         printf("Escolha uma opção: ");
@@ -123,15 +115,25 @@ int main() {
             case 1:
                 adicionarProduto(lista, &qtd);
                 break;
+
             case 2:
-                listarProdutos(lista, qtd);
+                if (qtd == 0)
+                    printf("\nNenhum produto cadastrado.\n");
+                else
+                    listarProdutos(lista, qtd);
                 break;
+
             case 3:
-                emitirNotaFiscal(lista, qtd);
+                if (qtd == 0)
+                    printf("\nNenhum produto para emitir nota.\n");
+                else
+                    emitirNotaFiscal(lista, qtd);
                 break;
+
             case 4:
-                printf("\nEncerrando o sistema...\n");
+                printf("\nEncerrando...\n");
                 break;
+
             default:
                 printf("\nOpção inválida!\n");
         }
