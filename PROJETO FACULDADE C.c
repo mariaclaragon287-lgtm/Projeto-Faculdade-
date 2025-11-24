@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <locale.h>
 
-// =======================
 // ETAPA 4 - STRUCT PRODUTO
-// =======================
+
 struct Produto {
     char nome[50];
     int quantidade;
@@ -11,9 +10,9 @@ struct Produto {
     float total;
 };
 
-// =======================
+
 // ETAPA 5 - FUNÇÕES
-// =======================
+
 void adicionarProduto(struct Produto lista[], int *qtd) {
 
     printf("\nCadastro de Produto\n");
@@ -90,9 +89,9 @@ void emitirNotaFiscal(struct Produto lista[], int qtd) {
 
 
 
-// =======================
+
 // MAIN FINAL DO PROJETO
-// =======================
+
 int main() {
     setlocale(LC_ALL, "Portuguese");
 
